@@ -1,0 +1,203 @@
+@font-face {
+  font-family: 'DungGeunMo';
+  src: url('./assets/DungGeunMo.ttf') format('truetype');
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px 10px;
+  font-family: Arial, sans-serif;
+}
+
+.app {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* 전체 기준판 */
+.photobooth {
+  position: relative;
+  width: min(576px, 95vw);
+  aspect-ratio: 576 / 1024;
+  user-select: none;
+}
+
+/* 배경 */
+.bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* 카메라 영역*/
+.camera-stage {
+  position: absolute;
+  left: 130px;
+  top: 80px;
+  width: 415px;
+  height: 333px;
+  overflow: hidden;
+  z-index: 2;
+  background: transparent;
+}
+
+.camera-stage video,
+.camera-stage img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.camera-stage video {
+  transform: scaleX(-1);
+  background: #222;
+}
+
+#capturedPhoto {
+  display: none;
+}
+
+/* 카운트다운 */
+.countdown {
+  position: absolute;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+  font-size: 64px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* 스티커가 올라갈 레이어 */
+.sticker-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+}
+
+/* 프레임 */
+.window-frame {
+  position: absolute;
+  left: 85px;
+  top: 20px;
+  width: 491px;
+  height: 508px;
+  display: block;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* 스티커창 */
+.sticker-panel-bg {
+  position: absolute;
+  left: 50px;
+  top: 745px;
+  width: 411px;
+  height: 184px;
+  display: block;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* 실제 스티커 10개 배치 */
+.sticker-panel {
+  position: absolute;
+  left: 95px;
+  top: 795px;
+  width: 326px;
+  height: 112px;
+  z-index: 6;
+
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  align-items: center;
+  justify-items: center;
+  gap: 10px 12px;
+}
+
+.sticker-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.sticker-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* 생성되는 스티커 */
+.sticker-item {
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  cursor: grab;
+  touch-action: none;
+  transform-origin: center center;
+}
+
+.sticker-item:active {
+  cursor: grabbing;
+}
+
+.sticker-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+}
+
+/* 버튼 */
+.controls {
+  position: absolute;
+  left: 490px;
+  top: 780px;
+  z-index: 20;
+  display: grid;
+  gap: 6px;
+}
+
+.controls button {
+  background: #f2f2f2;
+  color: #111;
+  font-size: 11px;
+  padding: 6px 8px;
+  cursor: pointer;
+  box-shadow: 1px 1px 0 rgba(145, 207, 210, 0.18);
+  font-family: "DungGeunMo";
+}
+
+.controls button:hover {
+  background: #fff;
+}
