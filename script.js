@@ -35,13 +35,14 @@ const FRAME_Y = 20;
 const FRAME_W = 491;
 const FRAME_H = 508;
 
-const PANEL_X = 164;
-const PANEL_Y = 807;
+/* 현재 CSS 기준으로 수정 */
+const PANEL_X = 50;
+const PANEL_Y = 745;
 const PANEL_W = 411;
 const PANEL_H = 184;
 
-const STICKER_GRID_X = 210;
-const STICKER_GRID_Y = 855;
+const STICKER_GRID_X = 95;
+const STICKER_GRID_Y = 795;
 const STICKER_GRID_W = 326;
 const STICKER_GRID_H = 112;
 
@@ -132,7 +133,6 @@ function captureFrame() {
     sy = (vh - sh) / 2;
   }
 
-  /* 셀카처럼 좌우반전 저장 */
   ctx.save();
   ctx.translate(STAGE_W, 0);
   ctx.scale(-1, 1);
@@ -172,7 +172,6 @@ function retakePhoto() {
     });
   }
 
-  /* 스티커까지 초기화*/
   stickerLayer.innerHTML = "";
 }
 
@@ -188,7 +187,6 @@ function addSticker(src) {
   img.src = src;
   item.appendChild(img);
 
-  /* 카메라 화면 중앙에 생성 */
   const stickerSize = 52;
   item.style.left = `${cameraStage.clientWidth / 2 - stickerSize / 2}px`;
   item.style.top = `${cameraStage.clientHeight / 2 - stickerSize / 2}px`;
@@ -352,10 +350,8 @@ async function saveCompositeImage() {
     waitForImage(stickerPanelBg)
   ]);
 
-  /* 1. 전체 배경 */
   ctx.drawImage(bgImage, 0, 0, BASE_WIDTH, BASE_HEIGHT);
 
-  /* 2. 카메라 사진 or 실시간 비디오 */
   if (capturedDataUrl) {
     const tempPhoto = new Image();
     tempPhoto.src = capturedDataUrl;
@@ -365,7 +361,6 @@ async function saveCompositeImage() {
     drawVideoCover(ctx, video, STAGE_X, STAGE_Y, STAGE_W, STAGE_H);
   }
 
-  /* 3. 카메라창 내부 스티커 */
   const stickerItems = [...stickerLayer.querySelectorAll(".sticker-item")];
 
   for (const sticker of stickerItems) {
@@ -396,13 +391,9 @@ async function saveCompositeImage() {
     ctx.restore();
   }
 
-  /* 4. 윈도우 프레임 다시 덮기 */
   ctx.drawImage(windowFrame, FRAME_X, FRAME_Y, FRAME_W, FRAME_H);
-
-  /* 5. 스티커 패널 배경 */
   ctx.drawImage(stickerPanelBg, PANEL_X, PANEL_Y, PANEL_W, PANEL_H);
 
-  /* 6. 하단 스티커 패널 아이콘 */
   await drawStickerPanelIcons(
     ctx,
     STICKER_GRID_X,
@@ -411,7 +402,6 @@ async function saveCompositeImage() {
     STICKER_GRID_H
   );
 
-  /* 7. 다운로드 */
   const link = document.createElement("a");
   link.href = exportCanvas.toDataURL("image/png");
   link.download = "xp-photobooth.png";

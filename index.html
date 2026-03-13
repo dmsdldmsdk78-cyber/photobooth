@@ -8,45 +8,47 @@
 </head>
 <body>
   <main class="app">
-    <section class="photobooth" id="photobooth">
-      <!-- 전체 배경 -->
-      <img class="bg-image" id="bgImage" src="assets/Group 8.png" alt="background" />
+    <section class="photobooth-shell">
+      <section class="photobooth" id="photobooth">
+        <!-- 전체 배경 -->
+        <img class="bg-image" id="bgImage" src="assets/Group 8.png" alt="background" />
 
-      <!-- 실제 카메라 영역 -->
-      <div class="camera-stage" id="cameraStage">
-        <video id="video" autoplay playsinline muted></video>
-        <img id="capturedPhoto" alt="captured photo" />
-        <div class="countdown" id="countdown">3</div>
-        <div class="sticker-layer" id="stickerLayer"></div>
-      </div>
+        <!-- 실제 카메라 영역 -->
+        <div class="camera-stage" id="cameraStage">
+          <video id="video" autoplay playsinline muted></video>
+          <img id="capturedPhoto" alt="captured photo" />
+          <div class="countdown" id="countdown">3</div>
+          <div class="sticker-layer" id="stickerLayer"></div>
+        </div>
 
-      <!-- 윈도우 프레임 -->
-      <img class="window-frame" id="windowFrame" src="assets/window.png" alt="window frame" />
+        <!-- 윈도우 프레임 -->
+        <img class="window-frame" id="windowFrame" src="assets/window.png" alt="window frame" />
 
-      <!-- 스티커 창 -->
-      <img class="sticker-panel-bg" id="stickerPanelBg" src="assets/stiker.png" alt="sticker panel" />
+        <!-- 스티커 창 -->
+        <img class="sticker-panel-bg" id="stickerPanelBg" src="assets/stiker.png" alt="sticker panel" />
 
-      <!-- 실제 스티커 버튼 영역 -->
-      <div class="sticker-panel" id="stickerPanel">
-        <button class="sticker-btn" data-src="assets/1.png" type="button"><img src="assets/1.png" alt="1" /></button>
-        <button class="sticker-btn" data-src="assets/2.png" type="button"><img src="assets/2.png" alt="2" /></button>
-        <button class="sticker-btn" data-src="assets/3.png" type="button"><img src="assets/3.png" alt="3" /></button>
-        <button class="sticker-btn" data-src="assets/4.png" type="button"><img src="assets/4.png" alt="4" /></button>
-        <button class="sticker-btn" data-src="assets/5.png" type="button"><img src="assets/5.png" alt="5" /></button>
-        <button class="sticker-btn" data-src="assets/6.png" type="button"><img src="assets/6.png" alt="6" /></button>
-        <button class="sticker-btn" data-src="assets/7.png" type="button"><img src="assets/7.png" alt="7" /></button>
-        <button class="sticker-btn" data-src="assets/8.png" type="button"><img src="assets/8.png" alt="8" /></button>
-        <button class="sticker-btn" data-src="assets/9.png" type="button"><img src="assets/9.png" alt="9" /></button>
-        <button class="sticker-btn" data-src="assets/10.png" type="button"><img src="assets/10.png" alt="10" /></button>
-      </div>
+        <!-- 실제 스티커 버튼 영역 -->
+        <div class="sticker-panel" id="stickerPanel">
+          <button class="sticker-btn" data-src="assets/1.png" type="button"><img src="assets/1.png" alt="1" /></button>
+          <button class="sticker-btn" data-src="assets/2.png" type="button"><img src="assets/2.png" alt="2" /></button>
+          <button class="sticker-btn" data-src="assets/3.png" type="button"><img src="assets/3.png" alt="3" /></button>
+          <button class="sticker-btn" data-src="assets/4.png" type="button"><img src="assets/4.png" alt="4" /></button>
+          <button class="sticker-btn" data-src="assets/5.png" type="button"><img src="assets/5.png" alt="5" /></button>
+          <button class="sticker-btn" data-src="assets/6.png" type="button"><img src="assets/6.png" alt="6" /></button>
+          <button class="sticker-btn" data-src="assets/7.png" type="button"><img src="assets/7.png" alt="7" /></button>
+          <button class="sticker-btn" data-src="assets/8.png" type="button"><img src="assets/8.png" alt="8" /></button>
+          <button class="sticker-btn" data-src="assets/9.png" type="button"><img src="assets/9.png" alt="9" /></button>
+          <button class="sticker-btn" data-src="assets/10.png" type="button"><img src="assets/10.png" alt="10" /></button>
+        </div>
 
-      <!-- 이번엔 보이는 버튼으로 -->
-      <div class="controls">
-        <button id="startCameraButton" type="button">카메라 켜기</button>
-        <button id="captureButton" type="button">촬영하기</button>
-        <button id="retakeButton" type="button">다시찍기</button>
-        <button id="saveButton" type="button">저장하기</button>
-      </div>
+        <!-- 컨트롤 버튼 -->
+        <div class="controls">
+          <button id="startCameraButton" type="button">카메라 켜기</button>
+          <button id="captureButton" type="button">촬영하기</button>
+          <button id="retakeButton" type="button">다시찍기</button>
+          <button id="saveButton" type="button">저장하기</button>
+        </div>
+      </section>
     </section>
   </main>
 

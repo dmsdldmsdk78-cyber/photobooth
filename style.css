@@ -14,11 +14,7 @@ body {
 }
 
 body {
-  background: #000000;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 20px 10px;
+  background: #000;
   font-family: Arial, sans-serif;
 }
 
@@ -26,14 +22,21 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
+  padding: 12px 8px 24px;
 }
 
-/* 전체 기준판 */
+/* 바깥 반응형 래퍼 */
+.photobooth-shell {
+  width: min(576px, calc(100vw - 16px));
+}
+
+/* 576 x 1024 기준 작업판 */
 .photobooth {
   position: relative;
-  width: min(576px, 95vw);
+  width: 100%;
   aspect-ratio: 576 / 1024;
   user-select: none;
+  overflow: hidden;
 }
 
 /* 배경 */
@@ -47,7 +50,7 @@ body {
   pointer-events: none;
 }
 
-/* 카메라 영역*/
+/* 카메라 영역 */
 .camera-stage {
   position: absolute;
   left: 130px;
@@ -92,7 +95,7 @@ body {
   background: rgba(0, 0, 0, 0.2);
 }
 
-/* 스티커가 올라갈 레이어 */
+/* 스티커 레이어 */
 .sticker-layer {
   position: absolute;
   inset: 0;
@@ -123,7 +126,7 @@ body {
   pointer-events: none;
 }
 
-/* 실제 스티커 10개 배치 */
+/* 실제 스티커 버튼 */
 .sticker-panel {
   position: absolute;
   left: 95px;
@@ -195,9 +198,24 @@ body {
   padding: 6px 8px;
   cursor: pointer;
   box-shadow: 1px 1px 0 rgba(145, 207, 210, 0.18);
-  font-family: "DungGeunMo";
+  font-family: "DungGeunMo", monospace;
+  border: 1px solid #777;
+  white-space: nowrap;
 }
 
 .controls button:hover {
   background: #fff;
+}
+
+/* 모바일에서 너무 작아 보이는 것만 살짝 보정 */
+@media (max-width: 480px) {
+  .controls button {
+    font-size: 12px;
+    padding: 7px 9px;
+  }
+
+  .sticker-btn {
+    width: 42px;
+    height: 42px;
+  }
 }
