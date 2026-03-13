@@ -14,7 +14,7 @@ body {
 }
 
 body {
-  background: #000;
+  background: #ffffff;
   font-family: Arial, sans-serif;
 }
 
@@ -23,7 +23,7 @@ body {
   min-height: 100svh;
   display: flex;
   justify-content: center;
-  padding: 12px 8px 24px;
+  padding: 20px 8px 24px;
   overflow-x: hidden;
 }
 
@@ -187,7 +187,7 @@ body {
 /* 버튼: 490 / 576, 780 / 1024 */
 .controls {
   position: absolute;
-  left: 85.07%;
+  left: 83%;
   top: 76.17%;
   z-index: 20;
   display: grid;
@@ -197,7 +197,7 @@ body {
 .controls button {
   background: #f2f2f2;
   color: #111;
-  font-size: clamp(9px, 2.5vw, 11px);
+  font-size: clamp(10px, 2.5vw, 11px);
   padding: 6px 8px;
   cursor: pointer;
   box-shadow: 1px 1px 0 rgba(145, 207, 210, 0.18);

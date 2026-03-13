@@ -375,53 +375,52 @@ async function saveCompositeImage() {
 
     await waitForImage(img);
 
-    const localLeft = parseFloat(sticker.style.left || "0");
-    const localTop = parseFloat(sticker.style.top || "0");
-    const rotate = Number(sticker.dataset.rotate || 0);
+const localLeft = parseFloat(sticker.style.left || "0");
+const localTop = parseFloat(sticker.style.top || "0");
 
-    const scaleX = STAGE_W / cameraStage.clientWidth;
-    const scaleY = STAGE_H / cameraStage.clientHeight;
+const scaleX = STAGE_W / cameraStage.clientWidth;
+const scaleY = STAGE_H / cameraStage.clientHeight;
 
-    const w = sticker.offsetWidth * scaleX;
-    const h = sticker.offsetHeight * scaleY;
+const w = sticker.offsetWidth * scaleX;
+const h = sticker.offsetHeight * scaleY;
 
-    const x = STAGE_X + localLeft * scaleX;
-    const y = STAGE_Y + localTop * scaleY;
+const x = STAGE_X + localLeft * scaleX;
+const y = STAGE_Y + localTop * scaleY;
 
     ctx.save();
     ctx.translate(x + w / 2, y + h / 2);
     ctx.rotate((rotate * Math.PI) / 180);
     ctx.drawImage(img, -w / 2, -h / 2, w, h);
     ctx.restore();
-
-
-    ctx.drawImage(windowFrame, FRAME_X, FRAME_Y, FRAME_W, FRAME_H);
-    ctx.drawImage(stickerPanelBg, PANEL_X, PANEL_Y, PANEL_W, PANEL_H);
-
-    await drawStickerPanelIcons(
-      ctx,
-      STICKER_GRID_X,
-      STICKER_GRID_Y,
-      STICKER_GRID_W,
-      STICKER_GRID_H
-    );
-
-    const link = document.createElement("a");
-    link.href = exportCanvas.toDataURL("image/png");
-    link.download = "xp-photobooth.png";
-    link.click();
   }
 
-  /* ---------------------------
-     이벤트 연결
-  --------------------------- */
-  startCameraButton.addEventListener("click", setupCamera);
-  captureButton.addEventListener("click", startCapture);
-  retakeButton.addEventListener("click", retakePhoto);
-  saveButton.addEventListener("click", saveCompositeImage);
+  ctx.drawImage(windowFrame, FRAME_X, FRAME_Y, FRAME_W, FRAME_H);
+  ctx.drawImage(stickerPanelBg, PANEL_X, PANEL_Y, PANEL_W, PANEL_H);
 
-  stickerButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      addSticker(button.dataset.src);
-    });
+  await drawStickerPanelIcons(
+    ctx,
+    STICKER_GRID_X,
+    STICKER_GRID_Y,
+    STICKER_GRID_W,
+    STICKER_GRID_H
+  );
+
+  const link = document.createElement("a");
+  link.href = exportCanvas.toDataURL("image/png");
+  link.download = "xp-photobooth.png";
+  link.click();
+}
+
+/* ---------------------------
+   이벤트 연결
+--------------------------- */
+startCameraButton.addEventListener("click", setupCamera);
+captureButton.addEventListener("click", startCapture);
+retakeButton.addEventListener("click", retakePhoto);
+saveButton.addEventListener("click", saveCompositeImage);
+
+stickerButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    addSticker(button.dataset.src);
   });
+});
