@@ -120,7 +120,7 @@ body {
 /* 스티커창 배경: 50 / 576, 745 / 1024, 411 / 576, 184 / 1024 */
 .sticker-panel-bg {
   position: absolute;
-  left: 8.68%;
+  left: 6%;
   top: 72.75%;
   width: 71.35%;
   height: 17.97%;
@@ -132,8 +132,8 @@ body {
 /* 실제 스티커 버튼: 95 / 576, 795 / 1024, 326 / 576, 112 / 1024 */
 .sticker-panel {
   position: absolute;
-  left: 16.49%;
-  top: 77.64%;
+  left: 14%;
+  top: 77.5%;
   width: 56.60%;
   height: 10.94%;
   z-index: 6;
@@ -187,7 +187,7 @@ body {
 /* 버튼: 490 / 576, 780 / 1024 */
 .controls {
   position: absolute;
-  left: 83%;
+  left: 81%;
   top: 76.17%;
   z-index: 20;
   display: grid;

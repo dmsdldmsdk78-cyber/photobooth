@@ -375,17 +375,14 @@ async function saveCompositeImage() {
 
     await waitForImage(img);
 
-const localLeft = parseFloat(sticker.style.left || "0");
-const localTop = parseFloat(sticker.style.top || "0");
+    const localLeft = parseFloat(sticker.style.left || "0");
+    const localTop = parseFloat(sticker.style.top || "0");
+    const w = sticker.offsetWidth;
+    const h = sticker.offsetHeight;
+    const rotate = Number(sticker.dataset.rotate || 0);
 
-const scaleX = STAGE_W / cameraStage.clientWidth;
-const scaleY = STAGE_H / cameraStage.clientHeight;
-
-const w = sticker.offsetWidth * scaleX;
-const h = sticker.offsetHeight * scaleY;
-
-const x = STAGE_X + localLeft * scaleX;
-const y = STAGE_Y + localTop * scaleY;
+    const x = STAGE_X + localLeft;
+    const y = STAGE_Y + localTop;
 
     ctx.save();
     ctx.translate(x + w / 2, y + h / 2);
