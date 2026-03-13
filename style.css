@@ -132,10 +132,10 @@ body {
 /* 실제 스티커 버튼: 95 / 576, 795 / 1024, 326 / 576, 112 / 1024 */
 .sticker-panel {
   position: absolute;
-  left: 14%;
-  top: 77.5%;
-  width: 56.60%;
-  height: 10.94%;
+  left: 9.5%;
+  top: 78%;
+  width: 65%;
+  height: 10%;
   z-index: 6;
 
   display: grid;
