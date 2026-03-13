@@ -20,9 +20,11 @@ body {
 
 .app {
   width: 100%;
+  min-height: 100svh;
   display: flex;
   justify-content: center;
   padding: 12px 8px 24px;
+  overflow-x: hidden;
 }
 
 /* 바깥 반응형 래퍼 */
@@ -46,17 +48,18 @@ body {
   width: 100%;
   height: 100%;
   display: block;
+  object-fit: cover;
   z-index: 1;
   pointer-events: none;
 }
 
-/* 카메라 영역 */
+/* 카메라 영역: 130 / 576, 80 / 1024, 415 / 576, 333 / 1024 */
 .camera-stage {
   position: absolute;
-  left: 130px;
-  top: 80px;
-  width: 415px;
-  height: 333px;
+  left: 22.57%;
+  top: 7.81%;
+  width: 72.05%;
+  height: 32.52%;
   overflow: hidden;
   z-index: 2;
   background: transparent;
@@ -88,7 +91,7 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 20;
-  font-size: 64px;
+  font-size: clamp(36px, 10vw, 64px);
   font-weight: bold;
   color: #fff;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
@@ -102,37 +105,37 @@ body {
   z-index: 15;
 }
 
-/* 프레임 */
+/* 프레임: 85 / 576, 20 / 1024, 491 / 576, 508 / 1024 */
 .window-frame {
   position: absolute;
-  left: 85px;
-  top: 20px;
-  width: 491px;
-  height: 508px;
+  left: 14.76%;
+  top: 1.95%;
+  width: 85.24%;
+  height: 49.61%;
   display: block;
   z-index: 5;
   pointer-events: none;
 }
 
-/* 스티커창 */
+/* 스티커창 배경: 50 / 576, 745 / 1024, 411 / 576, 184 / 1024 */
 .sticker-panel-bg {
   position: absolute;
-  left: 50px;
-  top: 745px;
-  width: 411px;
-  height: 184px;
+  left: 8.68%;
+  top: 72.75%;
+  width: 71.35%;
+  height: 17.97%;
   display: block;
   z-index: 4;
   pointer-events: none;
 }
 
-/* 실제 스티커 버튼 */
+/* 실제 스티커 버튼: 95 / 576, 795 / 1024, 326 / 576, 112 / 1024 */
 .sticker-panel {
   position: absolute;
-  left: 95px;
-  top: 795px;
-  width: 326px;
-  height: 112px;
+  left: 16.49%;
+  top: 77.64%;
+  width: 56.60%;
+  height: 10.94%;
   z-index: 6;
 
   display: grid;
@@ -140,12 +143,12 @@ body {
   grid-template-rows: repeat(2, 1fr);
   align-items: center;
   justify-items: center;
-  gap: 10px 12px;
+  gap: 8px 10px;
 }
 
 .sticker-btn {
-  width: 40px;
-  height: 40px;
+  width: clamp(28px, 7vw, 40px);
+  height: clamp(28px, 7vw, 40px);
   border: none;
   background: transparent;
   padding: 0;
@@ -162,8 +165,8 @@ body {
 /* 생성되는 스티커 */
 .sticker-item {
   position: absolute;
-  width: 52px;
-  height: 52px;
+  width: clamp(42px, 12vw, 70px);
+  height: clamp(42px, 12vw, 70px);
   cursor: grab;
   touch-action: none;
   transform-origin: center center;
@@ -181,11 +184,11 @@ body {
   pointer-events: none;
 }
 
-/* 버튼 */
+/* 버튼: 490 / 576, 780 / 1024 */
 .controls {
   position: absolute;
-  left: 490px;
-  top: 780px;
+  left: 85.07%;
+  top: 76.17%;
   z-index: 20;
   display: grid;
   gap: 6px;
@@ -194,7 +197,7 @@ body {
 .controls button {
   background: #f2f2f2;
   color: #111;
-  font-size: 11px;
+  font-size: clamp(9px, 2.5vw, 11px);
   padding: 6px 8px;
   cursor: pointer;
   box-shadow: 1px 1px 0 rgba(145, 207, 210, 0.18);
@@ -207,15 +210,20 @@ body {
   background: #fff;
 }
 
-/* 모바일에서 너무 작아 보이는 것만 살짝 보정 */
 @media (max-width: 480px) {
-  .controls button {
-    font-size: 12px;
-    padding: 7px 9px;
+  .app {
+    padding: 8px 4px 20px;
   }
 
-  .sticker-btn {
-    width: 42px;
-    height: 42px;
+  .photobooth-shell {
+    width: min(100vw - 8px, 576px);
+  }
+
+  .controls {
+    gap: 4px;
+  }
+
+  .controls button {
+    padding: 5px 6px;
   }
 }
