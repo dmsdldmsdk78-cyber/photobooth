@@ -362,6 +362,7 @@ async function saveCompositeImage() {
   }
 
   const stickerItems = [...stickerLayer.querySelectorAll(".sticker-item")];
+  const stageRect = cameraStage.getBoundingClientRect();
 
   for (const sticker of stickerItems) {
     const src = sticker.dataset.src;
@@ -375,15 +376,15 @@ async function saveCompositeImage() {
 
     await waitForImage(img);
 
-    const localLeft = parseFloat(sticker.style.left || "0");
-    const localTop = parseFloat(sticker.style.top || "0");
-    const w = sticker.offsetWidth;
-    const h = sticker.offsetHeight;
     const rotate = Number(sticker.dataset.rotate || 0);
 
-    const x = STAGE_X + localLeft;
-    const y = STAGE_Y + localTop;
+    const stickerRect = sticker.getBoundingClientRect();
 
+    const x = STAGE_X + ((stickerRect.left - stageRect.left) / stageRect.width) * STAGE_W;
+    const y = STAGE_Y + ((stickerRect.top - stageRect.top) / stageRect.height) * STAGE_H;
+    const w = (stickerRect.width / stageRect.width) * STAGE_W;
+    const h = (stickerRect.height / stageRect.height) * STAGE_H;
+    
     ctx.save();
     ctx.translate(x + w / 2, y + h / 2);
     ctx.rotate((rotate * Math.PI) / 180);
