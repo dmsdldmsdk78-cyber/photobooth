@@ -47,7 +47,7 @@ const STICKER_GRID_W = 326;
 const STICKER_GRID_H = 112;
 
 /* ---------------------------
-   카메라 켜기
+   카메라 연결하기
 --------------------------- */
 async function setupCamera() {
   try {
@@ -59,9 +59,10 @@ async function setupCamera() {
       return;
     }
 
+    // 사용자 카메라/마이크 접근 요청해서 stream 받아오기
     stream = await navigator.mediaDevices.getUserMedia({
       video: {
-        facingMode: "user",
+        facingMode: "user", //전면카메라
         width: { ideal: 1280 },
         height: { ideal: 720 }
       },
@@ -91,9 +92,9 @@ function runCountdown(seconds = 3) {
       if (current > 0) {
         countdown.textContent = current;
       } else {
-        clearInterval(timer);
-        countdown.style.display = "none";
-        resolve();
+        clearInterval(timer); //반복멈춤
+        countdown.style.display = "none"; //숫자숨김
+        resolve(); //Promise신호완료
       }
     }, 1000);
   });
@@ -103,20 +104,22 @@ function runCountdown(seconds = 3) {
    사진 촬영
 --------------------------- */
 function captureFrame() {
-  if (!video.videoWidth || !video.videoHeight) {
+  if (!video.videoWidth || !video.videoHeight) { //연결안됬을때
     alert("카메라가 아직 준비되지 않았습니다.");
     return;
   }
 
   const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext("2d"); //2D용 컨텍스트 객체
 
   canvas.width = STAGE_W;
   canvas.height = STAGE_H;
 
+  // 카메라 원본영상 크기
   const vw = video.videoWidth;
   const vh = video.videoHeight;
 
+  // 비율 계산
   const videoRatio = vw / vh;
   const stageRatio = STAGE_W / STAGE_H;
 
@@ -135,7 +138,7 @@ function captureFrame() {
 
   ctx.save();
   ctx.translate(STAGE_W, 0);
-  ctx.scale(-1, 1);
+  ctx.scale(-1, 1); //좌우 반전
   ctx.drawImage(video, sx, sy, sw, sh, 0, 0, STAGE_W, STAGE_H);
   ctx.restore();
 
@@ -191,12 +194,12 @@ function addSticker(src) {
   item.style.left = `${cameraStage.clientWidth / 2 - stickerSize / 2}px`;
   item.style.top = `${cameraStage.clientHeight / 2 - stickerSize / 2}px`;
 
-  const rotate = Math.floor(Math.random() * 20 - 10);
+  const rotate = Math.floor(Math.random() * 20 - 10); // 스티커 각도 랜덤하게 돌리기
   item.dataset.rotate = String(rotate);
   item.style.transform = `rotate(${rotate}deg)`;
 
-  stickerLayer.appendChild(item);
-  makeDraggable(item);
+  stickerLayer.appendChild(item); // 사진위에
+  makeDraggable(item); // 드래그 가능하게 만드는 함수
 
   if (!stickerCache.has(src)) {
     const preload = new Image();
@@ -224,24 +227,29 @@ function makeDraggable(target) {
     startLeft = parseFloat(target.style.left || "0");
     startTop = parseFloat(target.style.top || "0");
 
-    target.style.zIndex = String(Date.now());
+    target.style.zIndex = String(Date.now()); // 스티커 맨 앞으로
   });
 
   target.addEventListener("pointermove", (event) => {
     if (pointerId !== event.pointerId) return;
 
+    // 지금 x - 처음 x = 얼마나 옮겼는지
     const dx = event.clientX - startX;
+    // 지금 y - 처음 y = 얼마나 옮겼는지
     const dy = event.clientY - startY;
 
     let nextLeft = startLeft + dx;
     let nextTop = startTop + dy;
 
+    // 스티커가 카메라 영역 밖으로 못 나가게 하는 한계값
     const maxLeft = cameraStage.clientWidth - target.offsetWidth;
     const maxTop = cameraStage.clientHeight - target.offsetHeight;
 
+    // 카메라 박스 안에만 있게 clamp 처리
     nextLeft = Math.max(0, Math.min(nextLeft, maxLeft));
     nextTop = Math.max(0, Math.min(nextTop, maxTop));
 
+    // 계산된 새 위치를 실제 CSS에 반영
     target.style.left = `${nextLeft}px`;
     target.style.top = `${nextTop}px`;
   });
@@ -252,7 +260,7 @@ function makeDraggable(target) {
     pointerId = null;
   });
 
-  target.addEventListener("dblclick", () => {
+  target.addEventListener("dblclick", () => { // 더블클릭시 삭제
     target.remove();
   });
 }
@@ -341,26 +349,29 @@ async function saveCompositeImage() {
   const exportCanvas = document.createElement("canvas");
   const ctx = exportCanvas.getContext("2d");
 
-  exportCanvas.width = BASE_WIDTH;
-  exportCanvas.height = BASE_HEIGHT;
+  // 저장 크기를 "프레임 크기"로만 맞춤
+  exportCanvas.width = FRAME_W;
+  exportCanvas.height = FRAME_H;
 
   await Promise.all([
-    waitForImage(bgImage),
-    waitForImage(windowFrame),
-    waitForImage(stickerPanelBg)
+    waitForImage(windowFrame)
   ]);
 
-  ctx.drawImage(bgImage, 0, 0, BASE_WIDTH, BASE_HEIGHT);
+  // 프레임 기준으로 카메라 영역 좌표 다시 계산
+  const photoX = STAGE_X - FRAME_X;
+  const photoY = STAGE_Y - FRAME_Y;
 
+  // 1) 사진(또는 실시간 비디오) 그리기
   if (capturedDataUrl) {
     const tempPhoto = new Image();
     tempPhoto.src = capturedDataUrl;
     await waitForImage(tempPhoto);
-    ctx.drawImage(tempPhoto, STAGE_X, STAGE_Y, STAGE_W, STAGE_H);
+    ctx.drawImage(tempPhoto, photoX, photoY, STAGE_W, STAGE_H);
   } else if (video.videoWidth) {
-    drawVideoCover(ctx, video, STAGE_X, STAGE_Y, STAGE_W, STAGE_H);
+    drawVideoCover(ctx, video, photoX, photoY, STAGE_W, STAGE_H);
   }
 
+  // 2) 스티커 그리기
   const stickerItems = [...stickerLayer.querySelectorAll(".sticker-item")];
   const stageRect = cameraStage.getBoundingClientRect();
 
@@ -377,14 +388,17 @@ async function saveCompositeImage() {
     await waitForImage(img);
 
     const rotate = Number(sticker.dataset.rotate || 0);
-
     const stickerRect = sticker.getBoundingClientRect();
 
-    const x = STAGE_X + ((stickerRect.left - stageRect.left) / stageRect.width) * STAGE_W;
-    const y = STAGE_Y + ((stickerRect.top - stageRect.top) / stageRect.height) * STAGE_H;
+    const x =
+      photoX +
+      ((stickerRect.left - stageRect.left) / stageRect.width) * STAGE_W;
+    const y =
+      photoY +
+      ((stickerRect.top - stageRect.top) / stageRect.height) * STAGE_H;
     const w = (stickerRect.width / stageRect.width) * STAGE_W;
     const h = (stickerRect.height / stageRect.height) * STAGE_H;
-    
+
     ctx.save();
     ctx.translate(x + w / 2, y + h / 2);
     ctx.rotate((rotate * Math.PI) / 180);
@@ -392,16 +406,8 @@ async function saveCompositeImage() {
     ctx.restore();
   }
 
-  ctx.drawImage(windowFrame, FRAME_X, FRAME_Y, FRAME_W, FRAME_H);
-  ctx.drawImage(stickerPanelBg, PANEL_X, PANEL_Y, PANEL_W, PANEL_H);
-
-  await drawStickerPanelIcons(
-    ctx,
-    STICKER_GRID_X,
-    STICKER_GRID_Y,
-    STICKER_GRID_W,
-    STICKER_GRID_H
-  );
+  // 3) 프레임을 캔버스 전체에 맞춰 그림
+  ctx.drawImage(windowFrame, 0, 0, FRAME_W, FRAME_H);
 
   const link = document.createElement("a");
   link.href = exportCanvas.toDataURL("image/png");

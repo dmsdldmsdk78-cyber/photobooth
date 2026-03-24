@@ -37,6 +37,7 @@ body {
   position: relative;
   width: 100%;
   aspect-ratio: 576 / 1024;
+  /* 글자선택 막기 */
   user-select: none;
   overflow: hidden;
 }
@@ -50,6 +51,7 @@ body {
   display: block;
   object-fit: cover;
   z-index: 1;
+  /* 클릭무시 */
   pointer-events: none;
 }
 
@@ -62,6 +64,7 @@ body {
   height: 32.52%;
   overflow: hidden;
   z-index: 2;
+  /* 배경투명 */
   background: transparent;
 }
 
@@ -75,6 +78,7 @@ body {
 }
 
 .camera-stage video {
+  /* 카메라 좌우반전 */
   transform: scaleX(-1);
   background: #222;
 }
@@ -91,6 +95,7 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 20;
+  /* 반응형 폰트 */
   font-size: clamp(36px, 10vw, 64px);
   font-weight: bold;
   color: #fff;
@@ -172,6 +177,7 @@ body {
   transform-origin: center center;
 }
 
+/* 스티커 잡는효과 */
 .sticker-item:active {
   cursor: grabbing;
 }
@@ -179,6 +185,7 @@ body {
 .sticker-item img {
   width: 100%;
   height: 100%;
+  /* 스티커가 다 보이게 */
   object-fit: contain;
   display: block;
   pointer-events: none;
